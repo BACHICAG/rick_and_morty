@@ -1,0 +1,7 @@
+.App {
+  text-align: center;
+  height: 100vh; /* Ajusta la altura a la altura total de la ventana */
+  padding: 20px;
+  margin: 0; /* Ajusta el margen a 0 */
+  padding: 0;
+}

@@ -1,0 +1,137 @@
+.contenedor_carta{
+  /* Dando color al contenedor */
+  border: 1px solid white;
+  background-color: #000;
+
+  /* Dando efectos al contenedor (sombras) */
+  box-shadow: 3px 5px 4px rgb(43, 255, 0, 0.9);
+  border-radius: 10px;
+
+  /* Dando tamaños al contenedor */
+  width: 300px;
+  height: 400px;
+  
+  /* separando la tarjeta del SearchBar */
+  margin: 10px 10px;
+
+  /* padding: 20px;
+  margin-bottom: 20px; */
+
+  /* Utilizando flexbox para poder manipular los elementos dentro del contenedor */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* overflow: hidden; */
+
+  /* Agregamos una transición suave para los cambios de la imagen*/
+  transition: all 0.3s ease;
+}
+
+/* Dando efecto de hover cambiando la escala del contenedor*/
+.contenedor_carta:hover{
+  transform: scale(1.03);
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Aplicando cambios al hacer clic en la carta */
+.contenedor_carta.clicked {
+  margin: 20px; /* Cambiamos el margen */
+  display: flex;
+  align-items: center;
+}
+
+/* Acomodando el botón a la esquina superior derecha */
+.button{
+  position: absolute;
+  top: 10px; 
+  right: 10px;
+  border-radius: 5px;
+}
+.button:hover{
+  color: #ff0000;
+  background-color: #d2c9c9;
+}
+
+/* Acomodando y dando tamaño a la imagen */
+.img{
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
+
+  position: relative;
+  top: 50px;
+  left: 26px;
+  /* Agregamos una transición suave para los cambios de la imagen*/
+  transition: all 0.3s ease;
+}
+
+/* Aplicando cambios en la imagen al hacer clic en la carta */
+.img.clicked {
+  width: 100px; /* Cambiamos el tamaño */
+  height: 100px; /* Cambiamos el tamaño */
+  border-radius: 50%; /* Cambiamos el borde */
+  top: 15px; /* Cambiamos la posición */
+  left: -80px; /* Cambiamos la posición */
+  box-shadow: 3px 5px 4px rgb(179, 0, 255, 0.8);
+}
+
+
+.contenedor_nombre{
+  width: 100%;
+  height: 50px;
+
+  margin-top: 80px; /* Ajusta el margen superior */
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  text-align: center;
+
+  transition: all 0.3s ease; /* Agrega una transición suave para los cambios */
+}
+
+
+/* Acomodando el texto del Nombre*/
+.h2{
+  color: #fff;
+  /* text-align: center; Centra el texto horizontalmente */
+  margin-top: 8px; /*Ajusta el margen superior */
+  transition: all 0.3s ease; /* Agrega una transición suave para los cambios */
+}
+
+/* Aplicando cambios en el texto al hacer clic en la carta */
+.h2.clicked {
+  font-size: 22px;
+  margin-top: 0px;
+  text-align: center;
+  transform: translateX(0) translateY(9px);
+}
+
+.contenedor_nombre.clicked{
+  /* background-color: #ff0000; */
+  width: 50%;
+  height: 50px;
+  margin-top: 0px;
+  text-align: right;
+  transform: translateX(60px) translateY(-65px);
+
+}
+
+.p{
+  color: #fff;
+  transform: translateY(-30px);
+}
+
+.hr{
+  width: 250px;
+  color: rgb(255, 255, 255, 0.2);
+  background-color: rgb(255, 255, 255, 0.2);
+  margin: 17px;
+}
+
+.Link{
+  color: #fff;
+}
