@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import validateForm from "./Validation.jsx";
 import style from "./Form.module.css";
 import video from "../../imagenes/rick-and-morty-stars-space.mp4";
+
 export default function Form(props) {
 
   const [userData, setUserData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
+  
+  function handleChange(event) {
+    const {name, value} = event.target;
+    setUserData({ ...userData, [name]: value });
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -15,12 +21,9 @@ export default function Form(props) {
     setErrors(formErrors);
   }
 
-  function handleChange(event) {
-    setUserData({ ...userData, [event.target.name]: event.target.value });
-  }
 
   // Verificar si el formulario es válido y habilitar el botón de envío
-  React.useEffect(() => {
+  useEffect(() => {
     const formErrors = validateForm(userData);
     setErrors(formErrors);
     setIsSubmitEnabled(Object.keys(formErrors).length === 0);
@@ -34,7 +37,8 @@ export default function Form(props) {
       </div>
 
       <div className={style.div_container}>
-        <label className={style.texto} htmlFor="email">Email</label>
+
+        <label className={style.texto} htmlFor="email">Email:</label>
 
         <input
           className={style.input}
@@ -49,6 +53,7 @@ export default function Form(props) {
         <br />
 
         {errors.email && <div className={style.error}>{errors.email}</div>}
+        
         <br />
 
         <label className={style.texto} htmlFor="password"> Password:</label>

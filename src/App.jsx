@@ -1,27 +1,31 @@
 import React, {useState, useEffect} from 'react';             //biblioteca utilizada para construir interfaces de usuario interactivas y reactivas.
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";   //Utilizado para poder utilizar Routes y Route
 
-import Cards from './components/Cards/Cards.jsx';        // Contenedor donde se encuentran las cartas
-import Nav from './components/Nav/Nav.jsx';            //Contenedor de la barra de navegación
+import Home from './components/Home/Home.jsx';           // Contenedor Home donde se encuentran las Cards y a su vez Card
+import Nav from './components/Nav/Nav.jsx';              //Contenedor de la barra de navegación
 import About from "./components/About/About.jsx";        //Acerca de...(en este caso, mi persona)
-import Detail from "./components/Detail/Detail.jsx";      //Detalles del personaje
-import Form from "./components/Form/Form.jsx";          // Formulario de registro
-import Error from "./components/Error.jsx";        //Página de Error
+import Detail from "./components/Detail/Detail.jsx";     //Detalles del personaje
+import Form from "./components/Form/Form.jsx";           // Formulario de registro
+import Error from "./components/Error.jsx";              //Página de Error
+import Favorites from './components/Favorites/Favorites.jsx';
 
-import style from './App.module.css';              //Estilos para App.jsx
+import style from './App.module.css';                    //Estilos para App.jsx
 
-import axios from "axios"                          // Obtención de los personajes hacia la API
+import axios from "axios";                               // Obtención de los personajes hacia la API
 
+import video from "./imagenes/Space.mp4";
+import sound from "./imagenes/sound-metroid-fusion.mp3";
+import sound2 from "./imagenes/song-about.mp3"
 
 function App() {
 
-  const [characters, setCharacters] = useState([]);
   const [addedCharacterIds, setAddedCharacterIds] = useState([]); // NO personajes repetidos
-  const location = useLocation(); // Obtener ubicación para mostrar la Nav
+  const [characters, setCharacters] = useState([]);
   const [access, setAccess] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation(); // Obtener ubicación para mostrar la Nav
   const email = "bryan@henry.com";
   const password = "Bryan40a";
-  const navigate = useNavigate();
 
 
   //---Buscar---------------------------------------------------------------------------------------
@@ -34,7 +38,9 @@ function App() {
       return;
     }
 
-    axios(`https://rickandmortyapi.com/api/character/${id}`).then(({ data }) => {
+    // agrega personajes a characters
+    axios(`https://rickandmortyapi.com/api/character/${id}`)
+      .then(({ data }) => {
        if (data.name) {
           setCharacters((oldChars) => [...oldChars, data]);
           setAddedCharacterIds((oldIds) => [...oldIds, Number(id)]);
@@ -54,7 +60,8 @@ function App() {
       return;
     }
 
-    axios(`https://rickandmortyapi.com/api/character/${randomId}`).then(({ data }) => {
+    axios(`https://rickandmortyapi.com/api/character/${randomId}`)
+    .then(({ data }) => {
       if (data.name) {
         setCharacters((oldChars) => [...oldChars, data]);
         setAddedCharacterIds((oldIds) => [...oldIds, randomId]);
@@ -87,7 +94,7 @@ function App() {
   }
 
   useEffect(() => {
-    !access && navigate('/');
+    !access && navigate("/");
   }, [access]);
 
   //---Log out---------------------------------------------------------------------------------------
@@ -100,13 +107,37 @@ function App() {
 
   return (
     <div className={style.App}>
+
+      {/* Que el video se reproduzca sin interrupción en todas excepto en "/","/about" y "*" */}
+      {(location.pathname !== '/' && location.pathname !== '/about' && location.pathname !== '*') && (
+        <div className={style.videoContainer}>
+          <video src={video} type="video/mp4" className={style.video} autoPlay loop muted/>
+        </div>
+      )}
+
+      {/*Que el audio se reproduzca sin interrupción en todas excepto en "/","/about" y "*"*/}
+      {(location.pathname !== '/' && location.pathname !== '/about' && location.pathname !== '*') && (
+        <audio autoPlay loop>
+          <source src={sound} type="audio/mp3"/>
+        </audio>
+      )}
+
+      {/* Que el audio se reproduzca solo en "/about" */}
+      {(location.pathname === '/about') && (
+        <audio autoPlay loop>
+          <source src={sound2} type="audio/mp3"/>
+        </audio>
+      )}
+
       {/*Mostrar Nav en todas excepto en "/" */}
-       {location.path !== '/' && <Nav onSearch={onSearch} addRandomCharacter={addRandomCharacter} logout={logout}/>}
+       {location.path !== '/' && location.path !== '*' && <Nav onSearch={onSearch} addRandomCharacter={addRandomCharacter} logout={logout}/>}
+
       <Routes>
-        <Route path="/" element={<Form login={login}/>}/>
-        <Route path="/home" element={<Cards characters={characters} onClose={onClose} />}></Route>
-        <Route path="/about" element={<About/>}></Route>
-        <Route path="/detail/:id" element={<Detail/>}/>
+        <Route path="/" element={<Form login={login} />} />
+        <Route path="/home" element={<Home characters={characters} onClose={onClose} />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/favorites" element={<Favorites onClose={onClose} />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </div>

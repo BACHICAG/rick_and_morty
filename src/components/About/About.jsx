@@ -10,18 +10,11 @@ export default function About() {
                 <h1 className={style.h1}>About me</h1>
 
                 <p className={style.p}>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dignissimos
-                    animi ullam voluptas fugiat sint voluptatum neque nam cupiditate,
-                    voluptate voluptates id pariatur excepturi fuga reiciendis recusandae
-                    quidem dicta delectus totam.<br/><br/>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dignissimos
-                    animi ullam voluptas fugiat sint voluptatum neque nam cupiditate,
-                    voluptate voluptates id pariatur excepturi fuga reiciendis recusandae
-                    quidem dicta delectus totam.<br/><br/>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dignissimos
-                    animi ullam voluptas fugiat sint voluptatum neque nam cupiditate,
-                    voluptate voluptates id pariatur excepturi fuga reiciendis recusandae
-                    quidem dicta delectus totam.
+                Hello everyone! My name is Bryan, I'm 23 years old,
+                I'm an electronic engineer with an emphasis on embedded systems design
+                and I consider myself an eternal learner. Lover of creativity, innovative ideas and
+                I am always looking for inspiration for new projects and challenges.
+                Also, I'll soon be a High Earner, but Not Rich Yet.😉
                 </p>
             </div>
 

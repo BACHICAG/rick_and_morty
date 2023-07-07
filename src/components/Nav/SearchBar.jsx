@@ -1,7 +1,9 @@
 import React, {useState} from "react";
-import style from './SearchBar.module.css';
+
 import plus from "../../imagenes/plus-solid.svg"
 import random from "../../imagenes/Random.svg"
+
+import style from './SearchBar.module.css';
 
 export default function SearchBar(props){
 
@@ -13,6 +15,7 @@ export default function SearchBar(props){
 
   return (
     <div className={style.div}>
+
       <input
         className={style.input}
         type="text"
@@ -20,18 +23,21 @@ export default function SearchBar(props){
         onChange={handleChange}
         value={id}
       />
+
       <button
         className={style.button}
         title="Agregar"
         onClick={() => {props.onSearch(id);}}>
           <img className={style.svg} src={plus} alt="Agregar"/>
       </button>
+
       <button
         className={style.button}
         title="Random"
         onClick={props.addRandomCharacter}>
         <img className={style.svg} src={random} alt="random"/>
       </button>
+      
     </div>
   );
 }

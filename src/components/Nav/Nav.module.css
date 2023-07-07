@@ -21,7 +21,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 10px; /* Ajusta el ancho según tus necesidades */
+    width: 10px; 
     height: 30px;
     color: #fff;
     border-radius: 5px;
@@ -57,6 +57,8 @@
     width: 30px;
     height: 30px;
     fill: #fff;
+    position: relative;
+    left: -450px;
 }
 
 .svg2{
@@ -64,4 +66,12 @@
     width: 40px;
     height: 40px;
     fill: #fff;
+    position: relative;
+    left: -440px;
+}
+
+.img{
+    width: 300px;
+    height: 70px;
+    margin: 0 auto 0 20px;
 }
