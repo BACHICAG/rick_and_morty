@@ -11,24 +11,11 @@ export default function reducer (state = initialState, action) {
 
         case ADD_FAV:
 
-            return{
-                ...state,
-                myFavorites:[...state.myFavorites, action.payload ],
-                allCharacters:[...state.allCharacters, action.payload ],
-            };
+            return { ...state, myFavorites: action.payload, allCharacters: action.payload };
 
         case REMOVE_FAV:
             
-            // filtra los personajes para mantener en el array los personajes diferentes al que se quiere quitar,
-            // de esta forma estaríamos excluyendo al personaje que se quiere remover de los que se quiren mantener
-            const removeCharacterFav = [...state.myFavorites].filter((character) => {
-                                       character.id != action.payload
-            });
-
-            return{
-                ...state,
-                myFavorites: removeCharacterFav,
-            };
+        return { ...state, myFavorites: action.payload, allCharacters: action.payload};
 
         case FILTER:
 

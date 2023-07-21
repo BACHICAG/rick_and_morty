@@ -24,49 +24,56 @@ function App() {
   const [access, setAccess] = useState(false);
   const navigate = useNavigate();
   const location = useLocation(); // Obtener ubicación para mostrar la Nav
-  const email = "bryan@henry.com";
-  const password = "Bryan40a";
-
 
   //---Buscar---------------------------------------------------------------------------------------
 
-  function onSearch(id) {
+  async function onSearch(id) {
 
-    // Verificar si el ID ya existe en el estado addedCharacterIds
-    if (addedCharacterIds.includes(id)) {
-      window.alert('Este personaje ya ha sido agregado.');
-      return;
+    try {
+      
+      // Verificar si el ID ya existe en el estado addedCharacterIds
+      if (addedCharacterIds.includes(Number(id))) {
+        window.alert('Este personaje ya ha sido agregado.');
+        return;
+      }
+
+      // agrega personajes a characters
+      const axiosRequest = await axios(`http://localhost:3001/character/${id}`);
+      const {data} = axiosRequest;
+      
+      if (data.name) {
+        setCharacters((oldChars) => [...oldChars, data]);
+        setAddedCharacterIds((oldIds) => [...oldIds, Number(id)]);
+     }
     }
-
-    // agrega personajes a characters
-    axios(`https://rickandmortyapi.com/api/character/${id}`)
-      .then(({ data }) => {
-       if (data.name) {
-          setCharacters((oldChars) => [...oldChars, data]);
-          setAddedCharacterIds((oldIds) => [...oldIds, Number(id)]);
-       } else {
-          window.alert('¡No hay personajes con este ID!');
-       }
-    });
+    catch (error) {
+      window.alert('¡No hay personajes con este ID!');
+    }
  }
 
   //---Random---------------------------------------------------------------------------------------
 
-  function addRandomCharacter() {
-    const randomId = Math.floor(Math.random() * 826) + 1;
+  async function addRandomCharacter() {
 
-    if (addedCharacterIds.includes(randomId)) {
-      window.alert('Este personaje ya ha sido agregado.');
-      return;
-    }
+    try {
+      const randomId = Math.floor(Math.random() * 826) + 1;
+  
+      if (addedCharacterIds.includes(randomId)) {
+        window.alert('Este personaje ya ha sido agregado.');
+        return;
+      }
 
-    axios(`https://rickandmortyapi.com/api/character/${randomId}`)
-    .then(({ data }) => {
+      const axiosRequest2 = await axios(`http://localhost:3001/character/${randomId}`);
+      const {data} = axiosRequest2;
+  
       if (data.name) {
         setCharacters((oldChars) => [...oldChars, data]);
         setAddedCharacterIds((oldIds) => [...oldIds, randomId]);
       }
-    });
+    }
+    catch (error) {
+      window.alert(error.message);
+    }
   }
 
   //---Cerrar carta---------------------------------------------------------------------------------------
@@ -86,10 +93,19 @@ function App() {
 
   //---Login (sign in)---------------------------------------------------------------------------------------
 
-  function login(userData){
-    if(userData.email == email && userData.password == password){
-      setAccess(true);
-      navigate("/home");
+  async function login(userData){
+    const { email, password } = userData;
+    const URL = 'http://localhost:3001/user/login/';
+
+    try {
+      const axiosRequest3 = await axios(URL + `?email=${email}&password=${password}`);
+      const {data} = axiosRequest3;
+      const { access } = data;
+      setAccess(access);
+      access && navigate('/home');
+    }
+    catch (error) {
+      window.alert(error.message);
     }
   }
 
