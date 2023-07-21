@@ -37,6 +37,4 @@ server.get("/health-check/:id", (req, res) => {
   res.send("Workin!");
 });
 
-module.exports = {
-    server,
-}
+module.exports = server;

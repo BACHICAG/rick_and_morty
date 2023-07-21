@@ -1,6 +1,6 @@
-const app = require('../src/App.js');
+const App = require('../src/App.js');
 const session = require('supertest');
-const agent = session(app);
+const agent = session(App);
 
 describe("Test de RUTAS", ()=>{
 
@@ -34,7 +34,8 @@ describe("Test de RUTAS", ()=>{
 
         it("GET whit incorrect data, should return access false", async ()=>{
             const response = await agent.get("/user/login?email=brayan@henrry.com&password=Bryan40b");
-            expect(response.body).toEqual(false);
+            const access = {access: false}
+            expect(response.body).toEqual(access);
         });
         
     });
@@ -47,13 +48,13 @@ describe("Test de RUTAS", ()=>{
         describe("POST /favorites", ()=>{
     
             it("POST should add the character to the favs", async ()=>{
-                const response = (await agent.post("/favorites")).send(character1);
+                const response = await agent.post("/favorites").send(character1);
                 expect(response.body.length).toBe(1);
                 expect(response.body).toContainEqual(character1);  
             });
     
             it("POST should add the second character to the favs", async ()=>{
-                const response = (await agent.post("/favorites")).send(character2);
+                const response = await agent.post("/favorites").send(character2);
                 expect(response.body.length).toBe(2);
                 expect(response.body).toContainEqual(character1);
                 expect(response.body).toContainEqual(character2);
@@ -62,14 +63,14 @@ describe("Test de RUTAS", ()=>{
     
         describe("DELETE /favorites/:id", ()=>{
             it("DELETE should return the previous character when sending wrong data", async ()=>{
-                const response = (await agent.delete("/favorites/69"))
+                const response = await agent.delete("/favorites/69")
                 expect(response.body.length).toBe(2);
                 expect(response.body).toContainEqual(character1);
                 expect(response.body).toContainEqual(character2);
             });
 
             it("DELETE should delete the character when sending correct data", async ()=>{
-                const response = (await agent.delete("/favorites/2"));
+                const response = await agent.delete("/favorites/2");
                 expect(response.body.length).toBe(1);
                 expect(response.body).toContainEqual(character1);
                 expect(response.body).not.toContainEqual(character2);
